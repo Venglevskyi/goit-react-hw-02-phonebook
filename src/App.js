@@ -19,14 +19,14 @@ export default class App extends Component {
   };
 
   addContact = (name, number) => {
-    const contacts = {
+    const newContact = {
       id: uuid(),
       name,
       number
     };
-    this.setState(prevState => ({
+    this.setState(prevState => ({ 
       contacts: prevState.contacts.map(
-        contact => (contact.name === name) ? alert(`${name} is already consist`) : [...prevState.contacts, contacts]
+        contact => (contact.name === name) ? alert(`${name} is already consist`) : {...contact, newContact}
       )
     }));
   };
