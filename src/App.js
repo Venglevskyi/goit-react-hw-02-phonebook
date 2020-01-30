@@ -24,25 +24,23 @@ export default class App extends Component {
       name,
       number
     };
-    this.setState(prevState => ({ 
-      contacts: prevState.contacts.map(
-        contact => (contact.name === name) ? alert(`${name} is already consist`) : {...contact, newContact}
-      )
-    }));
+    const findContact = this.state.contacts.find(
+      contact => contact.name === name
+    );
+    findContact
+      ? alert(`${findContact.name} is already consist`)
+      : this.setState(prevState => {
+          return { contacts: [...prevState.contacts, newContact] };
+        });
   };
-  // this.setState(prevState => {
-  //   return { contacts: [...prevState.contacts, contacts] };
-  // });
 
-  // updateContacts = contactId => {
-  //   this.setState(prevState => {
-  //     return {
-  //       contacts: prevState.contacts.map(contact => {
-  //         return contact.id === contactId ? { ...contact, contact } : contact;
-  //       })
-  //     };
-  //   });
-  // };
+  removeContact = contactId => {
+    this.setState(prevState => {
+      return {
+        contacts: prevState.contacts.filter(({ id }) => id !== contactId)
+      };
+    });
+  };
 
   formFilter = filter => {
     this.setState({ filter });
@@ -68,8 +66,9 @@ export default class App extends Component {
           onChange={this.formFilter}
           visibleSearchContacts={visibleContacts}
           contacts={contacts}
+          onRemoveContact={this.removeContact}
         />
-        <ContactList contacts={contacts} />
+        <ContactList contacts={contacts} onRemoveContact={this.removeContact} />
       </>
     );
   }

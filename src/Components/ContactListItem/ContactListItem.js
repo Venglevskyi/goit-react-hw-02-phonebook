@@ -3,12 +3,16 @@ import PropTypes from "prop-types";
 
 import styles from "./contactList.module.css";
 
-const ContactListItem = ({ name, number }) => (
+const ContactListItem = ({ name, number, removeContact }) => (
   <li className={styles.contactsListItem}>
     <p>
       {name}: {number}
     </p>
-    <button type="button" className={styles.deleteButton}>
+    <button
+      type="button"
+      className={styles.deleteButton}
+      onClick={removeContact}
+    >
       Delete
     </button>
   </li>
@@ -17,6 +21,7 @@ const ContactListItem = ({ name, number }) => (
 ContactListItem.propTypes = {
   name: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,
+  removeContact: PropTypes.func.isRequired
 };
 
 export default ContactListItem;

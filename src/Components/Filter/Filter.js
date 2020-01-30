@@ -5,7 +5,13 @@ import ContactListItem from "../ContactListItem/ContactListItem";
 
 import styles from "./filter.module.css";
 
-const Filter = ({ value, onChange, visibleSearchContacts, contacts }) => (
+const Filter = ({
+  value,
+  onChange,
+  visibleSearchContacts,
+  contacts,
+  onRemoveContact
+}) => (
   <div className={styles.filterForm}>
     <label className={styles.FormLabel}>
       Find contacts by name
@@ -18,11 +24,12 @@ const Filter = ({ value, onChange, visibleSearchContacts, contacts }) => (
     </label>
     <ul>
       {contacts.length > 2 &&
-        visibleSearchContacts.map(contact => (
+        visibleSearchContacts.map(({ id, name, number }) => (
           <ContactListItem
-            key={contact.id}
-            name={contact.name}
-            number={contact.number}
+            key={id}
+            name={name}
+            number={number}
+            removeContact={() => onRemoveContact(id)}
           />
         ))}
     </ul>
@@ -45,7 +52,8 @@ Filter.propTypes = {
       number: PropTypes.string.isRequired,
       id: PropTypes.string.isRequired
     })
-  )
+  ),
+  onRemoveContact: PropTypes.func.isRequired
 };
 
 export default Filter;
