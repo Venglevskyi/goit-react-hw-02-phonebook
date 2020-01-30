@@ -27,11 +27,13 @@ export default class App extends Component {
     const findContact = this.state.contacts.find(
       contact => contact.name === name
     );
-    findContact
-      ? alert(`${findContact.name} is already consist`)
-      : this.setState(prevState => {
-          return { contacts: [...prevState.contacts, newContact] };
-        });
+    if (findContact) {
+      alert(`${findContact.name} is already consist`);
+      return;
+    }
+    this.setState(prevState => {
+      return { contacts: [...prevState.contacts, newContact] };
+    });
   };
 
   removeContact = contactId => {
